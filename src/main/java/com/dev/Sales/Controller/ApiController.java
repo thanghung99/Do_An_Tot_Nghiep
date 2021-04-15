@@ -1,7 +1,6 @@
 package com.dev.Sales.Controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,26 +8,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.dev.Sales.Entities.GioHangEntity;
-import com.dev.Sales.Entities.MuaHangEntity;
 import com.dev.Sales.Entities.NguoiDungEntity;
 import com.dev.Sales.Entities.SanPhamEntity;
-import com.dev.Sales.Entities.ThanhToanEntity;
+import com.dev.Sales.Model.Mail;
 import com.dev.Sales.Repositories.GioHangRepository;
 import com.dev.Sales.Repositories.NguoiDungRepository;
 import com.dev.Sales.Repositories.SanPhamRepository;
 import com.dev.Sales.Repositories.ThanhToanRepository;
+import com.dev.Sales.Services.MailService;
 import com.dev.Sales.Services.MuaHangService;
 import com.dev.Sales.Services.NguoiDungService;
 import com.dev.Sales.dto.ApiGioHang;
@@ -53,7 +49,8 @@ public class ApiController {
 	private ThanhToanRepository thanhtoanRepository;
 	@Autowired
 	private GioHangRepository GioHangRepository;
-
+	@Autowired
+	private MailService mailService;
 	@PostMapping(value = "/api/XemSP")
 	public ResponseEntity<ApiResponse> xemsp(@RequestBody final Map<String, Object> id, final ModelMap model,
 			final HttpServletRequest request, final HttpServletResponse response) {
@@ -187,6 +184,13 @@ public class ApiController {
 			else {
 
 				muahangService.addMuaHang(thongtin, request);
+				 Mail mail = new Mail();
+			        mail.setMailFrom("nhtthang1999@gmail.com");
+			        mail.setMailTo("nguyenhungthang1999@gmail.com");
+			        mail.setMailSubject("Spring Boot - Email Example");
+			        mail.setMailContent("Bạn có đơn hàng mới");
+			        mailService.sendEmail(mail);
+				/////
 				kq = "Mua hàng thành công";
 			}
 

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+﻿<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- Footer -->
@@ -51,7 +51,7 @@
 				<div class="col-sm-6 col-lg-3 p-b-50">
 					<h4 class="stext-301 cl0 p-b-30">Địa chỉ email</h4>
 					<h3 class="email">				
-rumpunt21@gmail.com
+nguyenhungthang1999@gmail.com
 						<h3>
 							<!-- <form>
 						<div class="wrap-input1 w-full p-b-4">

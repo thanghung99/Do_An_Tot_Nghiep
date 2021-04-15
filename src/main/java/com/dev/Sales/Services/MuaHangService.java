@@ -56,7 +56,7 @@ public class MuaHangService {
 		gioHang.setNguoidung(nguoidung);
 		gioHang.setThanhtoan(thanhtoan);
 		gioHang.setStatus((byte) 1);
-		gioHang.setSdtNhan(Integer.parseInt(thongtin.getSdtNhan()));
+		gioHang.setSdtNhan(thongtin.getSdtNhan());
 		gioHang.setNguoiNhan(thongtin.getTenNguoiNhan());
 		GioHangRepository.save(gioHang);
 	for(GioHangDto gh : LgioHang) {
