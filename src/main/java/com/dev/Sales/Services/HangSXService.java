@@ -18,8 +18,6 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.dev.Sales.Controller.SecurityController;
-import com.dev.Sales.Controller.ADMIN.Add;
 import com.dev.Sales.Entities.HangSXEntity;
 import com.dev.Sales.Entities.NguoiDungEntity;
 import com.dev.Sales.Repositories.HangSXRepository;

@@ -99,7 +99,7 @@
 
 													<button class="item" data-toggle="tooltip"
 														data-placement="top" title="Edit">
-														<i class="fa fa-edit"></i></i>
+														 <a href="/Admin/UpdateMuaHang${muahang.id}" ><i class="fa fa-edit"></i></i></a>
 													</button>
 													<button class="item" data-toggle="tooltip"
 														data-placement="top" title="Delete">

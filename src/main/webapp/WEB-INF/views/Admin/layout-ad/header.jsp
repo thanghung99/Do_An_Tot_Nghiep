@@ -22,8 +22,7 @@
                 <!-- /Logo -->
                 <ul class="nav navbar-top-links navbar-right pull-right">
                     <li>
-                        <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
-                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+
                     </li>
                     <li>
                      <c:set var = "anh" scope = "session" value = "${ThongTinCaNhan.anh}"/>
@@ -55,10 +54,9 @@
                     </li>
                     <li>
                         <a href="/Admin/ThongTinCaNhan" class="waves-effect"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Thông tin cá nhân</a>
-
                     </li>
                     <li>
-                        <a href="#" class="waves-effect"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Basic Table</a>
+                        <a href="#" class="waves-effect"><i class="fa fa-table fa-fw" aria-hidden="true"></i>Quản lý</a>
                         <ul class="nav" id="side-menu-child">
                            <!--  <li><a href="/Admin/BinhLuan" >Bình Luận</a></li> -->
                          <!--  <li><a href="" >Giỏ Hàng</a></li> -->
@@ -73,9 +71,7 @@
                                <li><a href="/Admin/ThanhToan">Phương thức thanh toán </a></li>
                                <li><a href="/Admin/TheLoai">Thể Loại</a></li>
                                <li><a href="/Admin/TinTuc">Tin Tức</a></li>
-	<li><a href="/Admin/exportHoaDon">Export Hoa Don</a></li>
-                              <!--  <li><a href="/Admin/TraLoi">Trả lời</a></li> -->
-
+	                           <li><a href="/Admin/exportHoaDon">Xuất Hoá Đơn</a></li>
                         </ul>
                     </li>
                      <li>

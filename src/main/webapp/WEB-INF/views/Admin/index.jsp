@@ -20,8 +20,82 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/plugins/images/favicon.png">
     <title>Ample Admin Template - The Ultimate Multipurpose admin template</title>
    <%@ include file="/WEB-INF/views/Admin/layout-ad/include-css.jsp"%>
-</head>
+     <script
+         src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+     <script type="text/javascript"
+         src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<script >
+        var real_data = JSON.parse('${data}');
+        var real_data2 = JSON.parse('${data2}');
+
+         $(document).ready(function() {
+                    google.charts.load('current', {
+                        packages : [ 'corechart', 'bar' ]
+                    });
+                    google.charts.setOnLoadCallback(drawColumnChart);
+                    google.charts.setOnLoadCallback(drawColumnChart2);
+                    google.charts.setOnLoadCallback(drawPieChart);
+                });
+
+                    function drawColumnChart2() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Hãng sản xuất');
+                    data.addColumn('number', 'Số lượng');
+                    Object.keys(real_data2).forEach(function(key) {
+                        data.addRow([ real_data2[key].tenSP, real_data2[key].soLuong]);
+                    });
+                    var options = {
+                        title : 'Thông kê số áo theo hãng sản xuất ',
+                        hAxis : {
+                            title : 'Hãng sản xuất',
+                        },
+                        vAxis : {
+                            title : 'Số lượng'
+                        }
+                    };
+                    var chart = new google.visualization.ColumnChart(document
+                            .getElementById('chart_div2'));
+                        chart.draw(data, options);
+                }
+                function drawColumnChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Loại áo');
+                    data.addColumn('number', 'Số lượng');
+                    Object.keys(real_data).forEach(function(key) {
+                        data.addRow([ real_data[key].tenSP, real_data[key].soLuong]);
+                    });
+                    var options = {
+                        title : 'Thông kê số áo theo loại áo ',
+                        hAxis : {
+                            title : 'Loại áo',
+                        },
+                        vAxis : {
+                            title : 'Số lượng'
+                        }
+                    };
+                    var chart = new google.visualization.ColumnChart(document
+                            .getElementById('chart_div'));
+                    chart.draw(data, options);
+                }
+
+                function drawPieChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Year');
+                    data.addColumn('number', 'Views');
+                    Object.keys(real_data).forEach(function(key) {
+                        data.addRow([ key, real_data[key] ]);
+                    });
+                    var options = {
+                        title : 'Blog stats'
+                    };
+                    var chart = new google.visualization.PieChart(document
+                            .getElementById('piechart'));
+                    chart.draw(data, options);
+                }
+
+</script>
 <body class="fix-header">
     <!-- ============================================================== -->
     <!-- Preloader -->
@@ -89,6 +163,12 @@
                         </div>
                     </div>
                 </div>
+                     <div align="center" style="width: 1000px;">
+
+                             <div id="chart_div" style="width: 900px; height: 500px;"></div>
+                              <div id="chart_div2" style="width: 900px; height: 500px;"></div>
+
+                         </div>
                 <!--/.row -->
                 <!--row -->
                 <!-- /.row -->

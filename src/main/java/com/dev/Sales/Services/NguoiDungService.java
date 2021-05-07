@@ -79,7 +79,6 @@ public class NguoiDungService {
 				NguoiDungEntity ndSave = NguoiDungRepository.getOne(id);
 				if(imageND.getSize() > 0) {
 					ndSave.setAnh(imageND.getOriginalFilename());
-					System.out.println("ssssssssssssss - "+imageND.getOriginalFilename());
 				}
 				ndSave.setModifiedBy(ndung.getId().toString());
 				ndSave.setModifiedDate(new Date());

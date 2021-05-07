@@ -64,12 +64,7 @@
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 
-					<!-- <select id="role" onclick="Check.Role();" class="custom-select">
-						<option >Chọn Role...</option>
-						<option value="USER">USER</option>
-						<option value="ADMIN">ADMIN</option>
-						
-					</select> -->
+
 
 					<div class="container-login100-form-btn">
 						<button type="submit" class="login100-form-btn">
@@ -78,9 +73,10 @@
 					</div>
 
 					<div class="text-center p-t-90">
-						<a class="txt1" href="#">
-							Forgot Password?
+						<a class="txt1" href="/">
+							Hủy bỏ
 						</a>
+
 					</div>
 					
 					<script type="text/javascript">

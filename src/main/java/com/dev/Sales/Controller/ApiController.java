@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.dev.Sales.Services.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -51,6 +53,8 @@ public class ApiController {
 	private GioHangRepository GioHangRepository;
 	@Autowired
 	private MailService mailService;
+	@Autowired
+	private SanPhamService sanPhamService;
 	@PostMapping(value = "/api/XemSP")
 	public ResponseEntity<ApiResponse> xemsp(@RequestBody final Map<String, Object> id, final ModelMap model,
 			final HttpServletRequest request, final HttpServletResponse response) {
@@ -72,9 +76,9 @@ public class ApiController {
 		phamDto.setChatlieu(sanpham.getChatlieu());
 		phamDto.setGia(sanpham.getGia());
 		phamDto.setMoTa(sanpham.getMoTa());
+		phamDto.setKhuyenMai(sanpham.getKhuyenMai());
 		
-		
-		 SanPhamEntity sp = sanphamRepository.getOne(maSP);
+		SanPhamEntity sp = sanphamRepository.getOne(maSP);
 		  sp.setLuotXem(sp.getLuotXem()+1); sanphamRepository.save(sp);
 		return ResponseEntity.ok(new ApiResponse(200, phamDto));
 	}
@@ -104,7 +108,9 @@ public class ApiController {
 			cartItem.setSoLuong(1);
 			cartItem.setAnh(sp.getAnh1());
 			cartItem.setTenSP(sp.getTenSP());
-			cartItem.setGia(sp.getGia());
+			if(sp.getKhuyenMai() != null)
+			cartItem.setGia(Integer.parseInt(sp.getKhuyenMai()));
+			else cartItem.setGia(sp.getGia());
 			cartItem.setSize(giohang.getSize());
 			cartItem.setId(maSP);
 			LsanPham.add(cartItem);
@@ -156,7 +162,6 @@ public class ApiController {
 	public ResponseEntity<ApiResponse> sl(@RequestBody final soLuong sl, final ModelMap model,
 			final HttpServletRequest request, final HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		System.out.println("---------------------------------");
 		List<GioHangDto> LgioHang = (List<GioHangDto>) session.getAttribute("LGioHang");
 		for (GioHangDto gh : LgioHang) {
 			if (gh.getId() == sl.getId()) {

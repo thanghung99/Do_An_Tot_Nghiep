@@ -151,7 +151,6 @@ public class Add {
 			@RequestParam("image3") MultipartFile anh3,
 			@RequestParam("image4") MultipartFile anh4) throws Exception
 			 {
-		System.out.println(anh1.getOriginalFilename());
 		sanphamService.addSP(sanpham, anh1, anh2, anh3, anh4, request);
 		List<HangSXEntity> Lhang = new ArrayList<HangSXEntity>();
 		List<TheLoaiEntity> Ltheloai = new ArrayList<TheLoaiEntity>();

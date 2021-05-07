@@ -17,8 +17,8 @@ var colors = [
 ];
 
 function connect(event) {
-   // username = document.querySelector('#name').value.trim();
-username = "Thang"
+    username = document.querySelector('#name').value.trim();
+
     if(username) {
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
