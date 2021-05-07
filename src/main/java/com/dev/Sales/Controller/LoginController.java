@@ -56,11 +56,10 @@ public class LoginController {
 	public String check(@ModelAttribute("Login") Login login, ModelMap model, final HttpServletRequest request) {
 		int count =0;
 		for(NguoiDungEntity nguoidung : nguoidungRepository.findAll()) {
-			if(nguoidung.getUserName().equals(login.getUsername())) {
+			if(nguoidung.getUserName().equals(login.getUsername()) && nguoidung.getPassWord().equals(login.getPassword())) {
 				for(QuyenEntity quyen :quyenRepository.findAll()) {
 					List<PhanQuyenEntity> Lphanquyen = quyen.getLphanQuyen();
 					for(PhanQuyenEntity phanquyen : Lphanquyen)
-						
 							if(phanquyen.getQuyen_phanQuyen().getId()==1 ||phanquyen.getQuyen_phanQuyen().getId()==2) {
 								
 								 nguoidung = hangsxService.searchUserByUserName(login.getUsername());	
@@ -110,8 +109,7 @@ public class LoginController {
 		}
 		
 	}
-	
-		return "/";
+		return "login";
 		
 }
 }

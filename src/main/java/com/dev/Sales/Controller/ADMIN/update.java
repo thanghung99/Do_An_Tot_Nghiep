@@ -5,22 +5,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.dev.Sales.Entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.dev.Sales.Entities.HangSXEntity;
-import com.dev.Sales.Entities.NguoiDungEntity;
-import com.dev.Sales.Entities.SanPhamEntity;
-import com.dev.Sales.Entities.SlideEntity;
 import com.dev.Sales.Repositories.BinhLuanReposotory;
 import com.dev.Sales.Repositories.GioHangRepository;
 import com.dev.Sales.Repositories.HangSXRepository;
@@ -39,6 +31,9 @@ import com.dev.Sales.Services.PhanQuyenService;
 import com.dev.Sales.Services.SanPhamService;
 import com.dev.Sales.Services.SlideService;
 import com.dev.Sales.Services.TinTucService;
+
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class update {
@@ -101,19 +96,20 @@ public class update {
 				model.addAttribute("SanPham", sp);
 				break;
 			}
-		return "Admin/update/updateSanPham";
+		model.addAttribute("ListHang",hangRepository.findAll());
+		model.addAttribute("ListTheLoai",theloaiRepository.findAll());
+		return "Admin/update/updateSP";
 	}
-	@PostMapping(value = { "/Admin/UpdateSanPham/{id}" })
-	public String updatesp(@PathVariable("id") int id,@ModelAttribute ("updateSanPham") SanPhamEntity sanpham ,final ModelMap model,
-			final HttpServletRequest request, final HttpServletResponse response,
-			@RequestParam("anhHangSX") MultipartFile hangImage) throws Exception {
-		for(HangSXEntity hang : hangRepository.findAll() )
-			if(hang.getId()==id) {
-					//hangservice.updateHang(sanpham, hangImage, request, id);
-					break;
-			}
-	
-		return "Admin/update/updateHangSX";
+	@PostMapping(value = { "/Admin/updateSanPham/{id}" })
+	public String updatesp(@ModelAttribute ("updateSanPham") SanPhamEntity sanpham, @PathVariable("id") int id  ,final ModelMap model,
+						   final HttpServletRequest request, final HttpServletResponse response,
+						   @RequestParam("image1") MultipartFile anh1,
+						   @RequestParam("image2") MultipartFile anh2,
+						   @RequestParam("image3") MultipartFile anh3,
+						   @RequestParam("image4") MultipartFile anh4) throws Exception
+	 {
+	 	sanphamService.updateSP(sanpham,id, anh1, anh2, anh3, anh4, request);
+		return "redirect:/Admin/SanPham";
 	}
 	
 	///////////////////////////
@@ -153,5 +149,23 @@ public class update {
 		nguoidungService.udND(nguoidung, anh, request, nd.getId());
 		return "Admin/ThongTinCaNhan";
 	}
-	
+	@GetMapping("/Admin/UpdateMuaHang{id}")
+	public String showUpdateDH(@PathVariable("id") int id,Model model){
+		Optional<MuaHangEntity> muahangOpt = muahangRepository.findById(id);
+		if(muahangOpt.isPresent()){
+			model.addAttribute("DonHang",muahangOpt.get());
+			return "Admin/update/updateDonHang";
+		}
+		return "Admin/MuaHang";
+	}
+	@PostMapping("/Admin/UpdateMuaHang{id}")
+	public String updateDH(@PathVariable("id") int id, @ModelAttribute("status") int status){
+		Optional<MuaHangEntity> muahangOpt = muahangRepository.findById(id);
+		MuaHangEntity muahang = muahangOpt.get();
+		if(muahangOpt.isPresent()){
+			muahang.setStatus((byte) status);
+			muahangRepository.save(muahang);
+		}
+		return "redirect:/Admin/UpdateMuaHang{id}";
+	}
 }

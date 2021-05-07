@@ -11,11 +11,20 @@
 					<div class="left-top-bar"></div>
 
 					<div class="right-top-bar flex-w h-full">
-						<a href="ThongTinCaNHan" class="flex-c-m trans-04 p-lr-25"> Thông Tin Cá
-							Nhân </a> <a href="Register" class="flex-c-m trans-04 p-lr-25"> ĐăngKý </a>
-
-						<a href="Login" class="flex-c-m trans-04 p-lr-25"> Đăng Nhập </a> <a
-							href="Login" class="flex-c-m trans-04 p-lr-25"> Đăng Xuất </a>
+					<c:if test="${ThongTinCaNhan != null}" >
+						<a href="ThongTinCaNhan" class="flex-c-m trans-04 p-lr-25"> Thông Tin Cá
+							Nhân </a>
+					</c:if>
+					<c:if test="${ThongTinCaNhan != null}" >
+                    	<a href="DoiMatKhau" class="flex-c-m trans-04 p-lr-25"> Đổi mật khẩu</a>
+                    </c:if>
+					<a href="Register" class="flex-c-m trans-04 p-lr-25"> ĐăngKý </a>
+	                    <c:if test="${ThongTinCaNhan == null}" >
+						<a href="Login" class="flex-c-m trans-04 p-lr-25"> Đăng Nhập </a>
+					    </c:if>
+						<c:if test="${ThongTinCaNhan != null}" >
+						<a href="Logout" class="flex-c-m trans-04 p-lr-25"> Đăng Xuất </a>
+					    </c:if>
 					</div>
 				</div>
 			</div>
@@ -59,13 +68,9 @@
                
                         </c:if>
                         <c:if test="${ThongTinCaNhan != null}">
-                     
 				<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 ">
-							<i class="zmdi zmdi-male"></i></i> <span class="ten">${ThongTinCaNhan.tenND}</span>
+							<i class="zmdi zmdi-male"></i></i> <span class="ten"><a href ="/ThongTinCaNhan">${ThongTinCaNhan.tenND}</a></span>
 				</div> </c:if>
-
-
-
 						<!-- <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
 							<i class="zmdi zmdi-logout"></i>
 						</a> -->
@@ -84,8 +89,6 @@
 
 			<!-- Icon header -->
 			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
-
-
 				<div
 					class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
 					data-notify="2">
@@ -177,7 +180,6 @@
 						<div class="header-cart-item-img ">
 							<img src="images/${giohang.anh}" alt="IMG" id="img_anh">${giohang.tenSP}
 						</div>
-
 						<div class="header-cart-item-txt p-t-8">
 							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04" id="a_tenSP">
 								</a>

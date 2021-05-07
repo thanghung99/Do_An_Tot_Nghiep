@@ -132,8 +132,19 @@
 								<div class="block2-txt-child1 flex-col-l ">
 									<a href="product-detail.html"
 										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										${sanpham.getTenSP()} </a> <span class="stext-105 cl3">
-										${sanpham.getGia()} </span>
+										${sanpham.getTenSP()}
+										 <c:set var = "km" scope = "session" value = "${sanpham.khuyenMai}"/>
+										<c:if test="${km != null}">
+										 </a> <span class="stext-105 cl3">
+										<del>${sanpham.getGia()} VNĐ</del></span>
+										<span class="stext-105 cl3">
+                                       	${sanpham.khuyenMai} VNĐ</span>
+                                       	</c:if>
+
+                                       	<c:if test="${km == null}">
+                                         </a> <span class="stext-105 cl3">
+                                        ${sanpham.getGia()} VNĐ</span>
+                                        </c:if>
 										${sanpham.getHangsx().getTenHang()}
 									
 										</script>
@@ -215,9 +226,20 @@
 								<div class="block2-txt-child1 flex-col-l ">
 									<a href="product-detail.html"
 										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										${sanpham.getTenSP()} </a> <span class="stext-105 cl3">
-										${sanpham.getGia()} </span>
-										${sanpham.getHangsx().getTenHang()}
+										${sanpham.getTenSP()}
+										<c:set var = "km" scope = "session" value = "${sanpham.khuyenMai}"/>
+                                        <c:if test="${km != null}">
+                                       </a> <span class="stext-105 cl3">
+                                        <del>${sanpham.getGia()} VNĐ</del></span>
+                                        <span class="stext-105 cl3">
+                                        ${sanpham.khuyenMai} VNĐ</span>
+                                        </c:if>
+
+                                       <c:if test="${km == null}">
+                                       </a> <span class="stext-105 cl3">
+                                       ${sanpham.getGia()} VNĐ</span>
+                                        </c:if>
+                                        ${sanpham.getHangsx().getTenHang()}
 									
 										</script>
 								</div>
@@ -305,30 +327,25 @@
 				<div class="flex-w flex-c-m m-tb-10">
 
 
-					<div
-						class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-						<i
-							class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-						Search
-					</div>
+
 				</div>
 
 				<!-- Search product -->
+
 				<div class="dis-none panel-search w-full p-t-10 p-b-15">
+				<form>
 					<div class="bor8 dis-flex p-l-15">
 						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
 							<i class="zmdi zmdi-search"></i>
 						</button>
-
-						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
-							name="search-product" placeholder="Search">
+						<input class="mtext-107 cl2 size-114 plh2 p-r-15" id="search" type="text"
+							name="search-product" placeholder="Search" >
 					</div>
+					 </form>
 				</div>
 
 
 			</div>
-				
 
 
 			</div>
@@ -348,10 +365,20 @@
 								<div class="block2-txt-child1 flex-col-l ">
 									<a href="product-detail.html"
 										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-										${sanpham.getTenSP()} </a> <span class="stext-105 cl3">
-										${sanpham.getGia()} </span>
-										${sanpham.getHangsx().getTenHang()}
-									
+										${sanpham.getTenSP()}
+										<c:set var = "km" scope = "session" value = "${sanpham.khuyenMai}"/>
+                                        <c:if test="${km != null}">
+                                        </a> <span class="stext-105 cl3">
+                                        <del>${sanpham.getGia()} VNĐ</del></span>
+                                        <span class="stext-105 cl3">
+                                        ${sanpham.khuyenMai} VNĐ</span>
+                                       	</c:if>
+
+                                       	<c:if test="${km == null}">
+                                        </a> <span class="stext-105 cl3">
+                                       ${sanpham.getGia()} VNĐ</span>
+                                        </c:if>
+                                        ${sanpham.getHangsx().getTenHang()}
 										</script>
 								</div>
 								<div class="block2-txt-child2 flex-r p-t-3">
@@ -396,12 +423,17 @@
 					 	 $(".anh3 ").attr('href',"images/"+jsonResult.data.anh3); 
 					 	 
 					 	 $(".tenSP").html(jsonResult.data.tenSP);
+					 	 if(jsonResult.data.khuyenMai != null){
+					 	    $(".gia").html("<del>"+jsonResult.data.gia +"  VND </del>");
+					 	    $(".khuyenMai").html(jsonResult.data.khuyenMai +"  VND");
+					 	 }
+                         if(jsonResult.data.khuyenMai == null){
 					 	 $(".gia").html(jsonResult.data.gia +"  VND");
+					 	 $(".khuyenMai").html("");
+					 	 }
 					 	 $(".chatlieu").html(jsonResult.data.chatLieu);
 					 	 $(".mota").html(jsonResult.data.moTa);
-					 	 
-					 	
-						
+
 					}
 				});
 								
@@ -494,7 +526,10 @@
 							<span class="mtext-106 cl2 gia" >
 								
 							</span>
+                            <br>
+                            <span class="mtext-106 cl2 khuyenMai" >
 
+							</span>
 							<p class="stext-102 cl3 p-t-23 chatlieu">
 								
 							</p>

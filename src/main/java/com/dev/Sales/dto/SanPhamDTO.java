@@ -10,7 +10,16 @@ public class SanPhamDTO {
 	 private String anh3;
 	 private String anh4;
 	 private String chatlieu;
-	 
+	private String  khuyenMai;
+
+	public String getKhuyenMai() {
+		return khuyenMai;
+	}
+
+	public void setKhuyenMai(String khuyenMai) {
+		this.khuyenMai = khuyenMai;
+	}
+
 	public int getId() {
 		return id;
 	}

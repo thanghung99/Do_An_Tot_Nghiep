@@ -69,13 +69,13 @@
                                             <th>SĐT</th>
                                             <th>Email</th>
                                             <th>Địa Chỉ</th>
-                                            <th>Người tạo </th>
+
                                             <th>Ngày tạo</th>
-                                            <th>Người sửa</th>
-                                            <th>Ngày sửa</th>
+
+
                                             <th>Status</th>
                                              <th> UserName</th>
-                                              <th>PassWord</th>
+
                                                <th>ảnh</th>
                                         </tr>
                                     </thead>
@@ -87,13 +87,13 @@
                                             <td>${nguoidung.sdt}</td>
                                             <td>${nguoidung.email}</td>
                                             <td>${nguoidung.diaChi}</td>
-                                            <td>${nguoidung.createdby}</td>
+
                                             <td>${nguoidung.createdDate}</td>
-                                            <td>${nguoidung.modifiedBy}</td>
-                                            <td>${nguoidung.modifiedDate} </td>
+
+
                                              <td>${nguoidung.status} </td>
                                               <td>${nguoidung.userName} </td>
-                                               <td>${nguoidung.passWord} </td>
+
                                                 <td>${nguoidung.anh} </td>
                                             <td>
                                             <div class="table-data-feature">
@@ -104,7 +104,7 @@
                                                         <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
                                                              <a href="/Admin/XoaNguoiDung${nguoidung.id}" ><i class="fa fa-trash"></i></a>
                                                         </button>
-                                                       <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                       <button class="item" data-toggle="tooltip" data-placement="top" title="Export">
                                                              <a href="/Admin/exportHoaDon/${nguoidung.id}" ><i class="fas fa-download"></i></a>
                                                         </button>
                                                     </div>

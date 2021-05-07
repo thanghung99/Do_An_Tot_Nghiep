@@ -1,12 +1,17 @@
 package com.dev.Sales.Controller.ADMIN;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.dev.Sales.Model.SanPhamChart;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -62,7 +67,7 @@ public class AdminController {
 	@Autowired private HangSXService hangservice;
 	@Autowired private NguoiDungService nguoidungservice;
 	@Autowired private SanPhamService sanphamservice;
-	
+	@Autowired private HangSXService hangsxService;
 	@RequestMapping(value = {  "/Admin/Login" }, method = RequestMethod.GET)
 	public String login(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
 		return "Admin/login_Admin";
@@ -90,20 +95,37 @@ public class AdminController {
 		return "Admin/HangSX";
 	}
 	@RequestMapping(value = {  "/Admin/index" }, method = RequestMethod.GET)
-	public String indexA(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
+	public String indexA(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response,Principal principal) {
 		model.addAttribute("soTK",nguoidungservice.soTK());
 		model.addAttribute("soSP",sanphamservice.soSP());
 		model.addAttribute("soHang",hangservice.soHang());
+		HttpSession http = request.getSession();
+		http.setAttribute("ThongTinCaNhan", hangsxService.searchUserByUserName(principal.getName()));
+		List<SanPhamEntity> lSP = sanphamRepository.findAll();
+		List<SanPhamChart> spChart = new ArrayList<>();
+		for(TheLoaiEntity tl : theloaiRepository.findAll()){
+			SanPhamChart chart = new SanPhamChart();
+			chart.setTenSP(tl.getTenTheLoai());
+			chart.setSoLuong(sanphamservice.soSPByLoai(tl.getId()));
+			spChart.add(chart);
+		}
+		List<SanPhamChart> spChart2 = new ArrayList<>();
+		for(HangSXEntity sx : hangRepository.findAll()){
+			SanPhamChart chart = new SanPhamChart();
+			chart.setTenSP(sx.getTenHang());
+			chart.setSoLuong(sanphamservice.soSPByHang(sx.getId()));
+			spChart2.add(chart);
+		}
+		model.addAttribute("data",new Gson().toJson(spChart) );
+		model.addAttribute("data2",new Gson().toJson(spChart2) );
 		return "Admin/index";
 	}
 	@RequestMapping(value = {  "/Admin/MuaHang" }, method = RequestMethod.GET)
 	public String muahang(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
-	List<MuaHangEntity> Lmuahang = new ArrayList<MuaHangEntity>();	
-	
+	List<MuaHangEntity> Lmuahang = new ArrayList<MuaHangEntity>();
 		for(GioHangEntity giohang : giohangRepository.findAll()) {
 			for(MuaHangEntity muahang : giohang.getLmuaHang()) {
 				Lmuahang.add(muahang);
-			
 			}
 		}
 		
@@ -146,13 +168,27 @@ public class AdminController {
 	}
 	@RequestMapping(value = {  "/Admin/SanPham" }, method = RequestMethod.GET)
 	public String sanpham(final ModelMap model, final HttpServletRequest request, final HttpServletResponse response) {
+		int max =8;
+		for(SanPhamEntity t : sanphamRepository.findAll())
+			max++;
+		int pageNumber = 1;
+		if(request.getParameter("page") != null) {
+			pageNumber = Integer.valueOf(request.getParameter("page"));
+			if(pageNumber < 1) pageNumber = 1;
+			if(pageNumber > max/8) pageNumber = pageNumber-1;
+		}
+		List<SanPhamEntity> Lsp = new ArrayList<>();
+		for(SanPhamEntity tt : sanphamservice.sanPhamPaging(pageNumber)) {
+			Lsp.add(tt);
+		}
 		List<SanPhamEntity> Lsanpham = new ArrayList<SanPhamEntity>();
 		for(SanPhamEntity sanpham : sanphamRepository.findAll()) {
 			Lsanpham.add(sanpham);
 			
 		}
 		
-		model.addAttribute("ListSanPham", Lsanpham);
+		model.addAttribute("ListSanPham", Lsp);
+		model.addAttribute("currentPage", pageNumber);
 		return "Admin/SanPham";
 	}
 	@RequestMapping(value = {  "/Admin/Slide" }, method = RequestMethod.GET)

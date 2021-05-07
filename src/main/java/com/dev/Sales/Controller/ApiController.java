@@ -1,7 +1,6 @@
 package com.dev.Sales.Controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -9,26 +8,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.annotations.Parameter;
+import com.dev.Sales.Services.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.dev.Sales.Entities.GioHangEntity;
-import com.dev.Sales.Entities.MuaHangEntity;
 import com.dev.Sales.Entities.NguoiDungEntity;
 import com.dev.Sales.Entities.SanPhamEntity;
-import com.dev.Sales.Entities.ThanhToanEntity;
+import com.dev.Sales.Model.Mail;
 import com.dev.Sales.Repositories.GioHangRepository;
 import com.dev.Sales.Repositories.NguoiDungRepository;
 import com.dev.Sales.Repositories.SanPhamRepository;
 import com.dev.Sales.Repositories.ThanhToanRepository;
+import com.dev.Sales.Services.MailService;
 import com.dev.Sales.Services.MuaHangService;
 import com.dev.Sales.Services.NguoiDungService;
 import com.dev.Sales.dto.ApiGioHang;
@@ -53,7 +51,10 @@ public class ApiController {
 	private ThanhToanRepository thanhtoanRepository;
 	@Autowired
 	private GioHangRepository GioHangRepository;
-
+	@Autowired
+	private MailService mailService;
+	@Autowired
+	private SanPhamService sanPhamService;
 	@PostMapping(value = "/api/XemSP")
 	public ResponseEntity<ApiResponse> xemsp(@RequestBody final Map<String, Object> id, final ModelMap model,
 			final HttpServletRequest request, final HttpServletResponse response) {
@@ -75,9 +76,9 @@ public class ApiController {
 		phamDto.setChatlieu(sanpham.getChatlieu());
 		phamDto.setGia(sanpham.getGia());
 		phamDto.setMoTa(sanpham.getMoTa());
+		phamDto.setKhuyenMai(sanpham.getKhuyenMai());
 		
-		
-		 SanPhamEntity sp = sanphamRepository.getOne(maSP);
+		SanPhamEntity sp = sanphamRepository.getOne(maSP);
 		  sp.setLuotXem(sp.getLuotXem()+1); sanphamRepository.save(sp);
 		return ResponseEntity.ok(new ApiResponse(200, phamDto));
 	}
@@ -107,7 +108,9 @@ public class ApiController {
 			cartItem.setSoLuong(1);
 			cartItem.setAnh(sp.getAnh1());
 			cartItem.setTenSP(sp.getTenSP());
-			cartItem.setGia(sp.getGia());
+			if(sp.getKhuyenMai() != null)
+			cartItem.setGia(Integer.parseInt(sp.getKhuyenMai()));
+			else cartItem.setGia(sp.getGia());
 			cartItem.setSize(giohang.getSize());
 			cartItem.setId(maSP);
 			LsanPham.add(cartItem);
@@ -159,7 +162,6 @@ public class ApiController {
 	public ResponseEntity<ApiResponse> sl(@RequestBody final soLuong sl, final ModelMap model,
 			final HttpServletRequest request, final HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		System.out.println("---------------------------------");
 		List<GioHangDto> LgioHang = (List<GioHangDto>) session.getAttribute("LGioHang");
 		for (GioHangDto gh : LgioHang) {
 			if (gh.getId() == sl.getId()) {
@@ -187,6 +189,13 @@ public class ApiController {
 			else {
 
 				muahangService.addMuaHang(thongtin, request);
+				 Mail mail = new Mail();
+			        mail.setMailFrom("nhtthang1999@gmail.com");
+			        mail.setMailTo("nguyenhungthang1999@gmail.com");
+			        mail.setMailSubject("Spring Boot - Email Example");
+			        mail.setMailContent("Bạn có đơn hàng mới");
+			        mailService.sendEmail(mail);
+				/////
 				kq = "Mua hàng thành công";
 			}
 

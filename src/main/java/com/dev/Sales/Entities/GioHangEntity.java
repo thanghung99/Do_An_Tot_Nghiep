@@ -29,7 +29,7 @@ public class GioHangEntity extends BaseEntity{
 	 private String diaChiNhan;
 	 
 	 @Column(name =  "sdtNhan", length = 11 , nullable = false )
-	 private Integer sdtNhan;
+	 private String sdtNhan;
 	 
 	
 	 
@@ -79,11 +79,11 @@ public class GioHangEntity extends BaseEntity{
 		this.diaChiNhan = diaChiNhan;
 	}
 
-	public Integer getSdtNhan() {
+	public String getSdtNhan() {
 		return sdtNhan;
 	}
 
-	public void setSdtNhan(Integer sdtNhan) {
+	public void setSdtNhan(String sdtNhan) {
 		this.sdtNhan = sdtNhan;
 	}
 

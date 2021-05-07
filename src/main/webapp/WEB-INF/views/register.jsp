@@ -87,8 +87,11 @@
 
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn" onclick="Register.Account();">
-							OK
+							Đăng ký
 						</button>
+						<button class="login100-form-btn"style="margin-left: 60px;">
+                        	<a href="/">Hủy bỏ</a>
+                        </button>
 					</div>
 
 					<!-- <div class="text-center p-t-90">

@@ -67,21 +67,17 @@
                                             <th>Mã sản phẩm</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Giá</th>
+                                            <th>Khuyến mại</th>
                                             <th>Loại sản phẩm </th>
                                             <th>Hãng sản xuất</th>
                                             <th>Mô tả</th>
                                             <th>Lượt xem</th>
-                                            <th>Lượt Like</th>
+                                            <th>Lượt Mua</th>
                                             <th>Chất liệu</th>
                                             <th>ảnh1</th>
                                             <th>ảnh2</th>
                                             <th>ảnh3</th>
                                             <th>ảnh4</th>
-                                            <th>Người tạo </th>
-                                            <th>Ngày tạo</th>
-                                            <th>Người sửa</th>
-                                            <th>Ngày sửa</th>
-                                            <th>Status</th>
 
                                         </tr>
                                     </thead>
@@ -91,29 +87,26 @@
                                             <td>${sanpham.id}</td>
                                             <td>${sanpham.tenSP}</td>
                                             <td>${sanpham.gia}</td>
+                                             <td>${sanpham.khuyenMai}</td>
                                             <td>${sanpham.getTheloai().getTenTheLoai()}</td>
                                             <td>${sanpham.getHangsx().getTenHang()}</td>
                                             <td>${sanpham.moTa}</td>
                                             <td>${sanpham.luotXem}</td>
-                                            <td>${sanpham.luotLike}</td>
+                                            <td>${sanpham.luotMua}</td>
                                             
                                          	<td>${sanpham.chatlieu}</td>
                                          	<td>${sanpham.anh1}</td>
                                          	<td>${sanpham.anh2}</td>
                                          	<td>${sanpham.anh3}</td>
                                          	<td>${sanpham.anh4}</td>
-                                         	<td>${sanpham.createdby}</td>
-                                         	<td>${sanpham.createdDate}</td>
-                                         	<td>${sanpham.modifiedBy}</td>
-                                         	<td>${sanpham.modifiedDate}</td>
-                                         	<td>${sanpham.status}</td>
+
                                          	
                                             
                                             <td>
                                             <div class="table-data-feature">
                                                 
                                                      <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-			 <a href="/Admin/UpdateSanPham${sanpham.id}" >
+			                                            <a href="/Admin/UpdateSanPham/${sanpham.id}" >
                                                             <i class="fa fa-edit"></i></i></a>
                                                         </button>
                                                         <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
@@ -124,9 +117,14 @@
                                              </td>
                                         </tr>
                                         </c:forEach>
-                                       
+
                                     </tbody>
                                 </table>
+<!-- Pagination -->
+                               <div class="clearfix"  style="padding: 20px 169px;">
+                               <a class="btn btn-primary float-left" href="/Admin/SanPham?page=${currentPage - 1 }">Quay lại</a>
+                              <a class="btn btn-primary float-right" href="/Admin/SanPham?page=${currentPage + 1 }" style="float: right;">Trang Tiếp</a>
+                              </div>
                             </div>
                         </div>
                     </div>

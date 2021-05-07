@@ -26,6 +26,9 @@ public class SanPhamEntity extends BaseEntity{
 	 @Column(name = "gia", nullable = false)
 	 private Integer gia;
 	 
+	 @Column(name = "khuyenMai", nullable = true)
+	 private String khuyenMai;
+	 
 	 @Lob
 	 @Column(name = "moTa", columnDefinition = "text", nullable = true)
 	 private String moTa;
@@ -33,8 +36,8 @@ public class SanPhamEntity extends BaseEntity{
 	 @Column(name = "luotXem", length = 11, nullable = true)
 	 private Integer luotXem;
 	 
-	 @Column(name = "luotLike", length = 11, nullable = true)
-	 private Integer luotLike;
+	 @Column(name = "luotMua", length = 11, nullable = true)
+	 private Integer luotMua;
 	 
 	 @Column(name = "anh1", length = 45, nullable = true)
 	 private String anh1;
@@ -94,7 +97,13 @@ public class SanPhamEntity extends BaseEntity{
 	}
 
 
-	
+	public String getKhuyenMai() {
+		return khuyenMai;
+	}
+
+	public void setKhuyenMai(String khuyenMai) {
+		this.khuyenMai = khuyenMai;
+	}
 
 	public String getMoTa() {
 		return moTa;
@@ -112,12 +121,12 @@ public class SanPhamEntity extends BaseEntity{
 		this.luotXem = luotXem;
 	}
 
-	public Integer getLuotLike() {
-		return luotLike;
+	public Integer getLuotMua() {
+		return luotMua;
 	}
 
-	public void setLuotLike(Integer luotLike) {
-		this.luotLike = luotLike;
+	public void setLuotMua(Integer luotMua) {
+		this.luotMua = luotMua;
 	}
 
 	public String getAnh1() {

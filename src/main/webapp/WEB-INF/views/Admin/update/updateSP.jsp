@@ -16,9 +16,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-     <%@ include file="/WEB-INF/views/Admin/layout-ad/include-css.jsp"%>
-  
-        
+    <%@ include file="/WEB-INF/views/Admin/add/layout-add/inlude-css.jsp"%>
+
     </style>
 </head>
 
@@ -34,111 +33,122 @@
     <!-- ============================================================== -->
     <!-- Wrapper -->
     <!-- ============================================================== -->
-      <%@ include file="/WEB-INF/views/Admin/layout-ad/header.jsp"%>
+     <%@ include file="/WEB-INF/views/Admin/layout-ad/header.jsp"%>
    <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Thêm Sản Phẩm</h4> </div>
+                        <h4 class="page-title">Sửa Sản Phẩm</h4> </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="#">Trang Chủ</a></li>
-                            <li class="active">Thêm Sản Phẩm</li>
+                            <li class="active">Sửa Sản Phẩm</li>
                         </ol>
                     </div>
                 </div>
                 <!-- /.row -->
                 <!-- .row -->
                 <div class="row row-main">
-                   
+
                     <div class="col-md-12 col-xs-12">
                         <div class="white-box">
-                            <form class="form-horizontal form-material" action="/Admin/UpdateSanPham/${HangSX.id}" method="post" modelAttribute="updateSanPham" enctype="multipart/form-data">
+                            <form:form class="form-horizontal form-material" action="/Admin/updateSanPham/${SanPham.id}" method="post" modelAttribute="updateSanPham" enctype="multipart/form-data">
                                  <div class="form-group">
                                     <label class="col-md-12">Tên Sản Phẩm</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line"> </div>
+                                        <form:input type="text" value="${SanPham.tenSP}" class="form-control form-control-line" path="tenSP" /> </div>
                                 </div>
                                  <div class="form-group">
                                     <label class="col-md-12">Giá</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line"> </div>
+                                        <form:input type="text" value="${SanPham.gia}" class="form-control form-control-line" path="gia"/> </div>
+                                </div>
+                                <div class="form-group">
+                                   <label class="col-md-12">Khuyễn Mãi</label>
+                                      <div class="col-md-12">
+                                          <form:input type="text" value="${SanPham.khuyenMai}" class="form-control form-control-line" path="khuyenMai"/> </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12">Thể loại</label>
                                     <div class="col-md-12">
-                                         <select class="form-control form-control-line" path="category.id">
-                                           <option>Danh sách 01</option>
-                                                <option>Danh sách 02</option>
-                                                <option>Danh sách 03</option>
-                                                <option>Danh sách 04</option>
-                                        <select>
+                                         <form:select class="form-control form-control-line" path="theloai" >
+                                           <form:options items="${ListTheLoai}" itemValue="id" itemLabel="tenTheLoai"></form:options>
+                                        </form:select>
                                     </div>
                                 </div>
                                  <div class="form-group">
                                     <label class="col-md-12">Tên Hãng</label>
                                     <div class="col-md-12">
-                                         <select class="form-control form-control-line" path="category.id">
-                                           <option>Danh sách 01</option>
-                                                <option>Danh sách 02</option>
-                                                <option>Danh sách 03</option>
-                                                <option>Danh sách 04</option>
-                                        <select>
+                                         <form:select class="form-control form-control-line" path="hangsx">
+                                           <form:options items="${ListHang}" itemValue="id" itemLabel="tenHang"></form:options>
+
+                                        </form:select>
                                     </div>
                                 </div>
                                <div class="form-group">
                                     <label class="col-md-12">Mô tả</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line"> </div>
+                                        <form:textarea id="moTa" value="${SanPham.moTa}" class="form-control form-control-line" path="moTa"/> </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="col-md-12">Chất liệu</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line"> </div>
+                                        <form:input type="text" value="${SanPham.chatlieu}" class="form-control form-control-line" path="chatlieu" /> </div>
                                 </div>
                                  <div class="form-group">
                                     <label class="col-md-12">Ảnh 1</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line"> </div>
+                                        <input type="file" name="image1">
+                                        </div>
                                 </div>
-                                 <div class="form-group">
                                     <label class="col-md-12">Ảnh 2</label>
+                                                             <div class="form-group">
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line"> </div>
+                                        <input type="file" name="image2"> </div>
                                 </div>
                                  <div class="form-group">
                                     <label class="col-md-12">Ảnh 3</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line"> </div>
+                                        <input type="file" name="image3"> </div>
                                 </div>
                                  <div class="form-group">
                                     <label class="col-md-12">Ảnh 4</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line"> </div>
-                                </div> <div class="form-group">
+                                        <input type="file" name="image4"> </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-md-12">status</label>
                                     <div class="col-md-12">
-                                        <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line"> </div>
-                              
+                                        <form:input type="text" value="${SanPham.status}" class="form-control form-control-line" path="status" /> </div>
+                              </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-success">Thêm</button>
+                                        <button type="submit" class="btn btn-success">Cập nhật</button>
                                     </div>
                                 </div>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                 </div>
                 <!-- /.row -->
             </div>
             <!-- /.container-fluid -->
-           
+
         </div>
-       
+
     </div>
     <!-- /#wrapper -->
-  <%@ include file="/WEB-INF/views/Admin/update/layout-update/include-js.jsp"%>
+   <%@ include file="/WEB-INF/views/Admin/add/layout-add/include-js.jsp"%>
+
+    <script type="text/javascript">
+
+	 	// ::: for richtext editor
+		$(document).ready(function() {
+		  $('#moTa').summernote("code", "${SanPham.moTa}");
+		});
+
+    </script>
 </body>
 
 </html>
